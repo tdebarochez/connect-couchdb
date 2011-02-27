@@ -12,6 +12,10 @@ Via npm :
 
 	  $ npm install connect-couchdb
 
+If database doesn't exist, it will create it and setting views. If database
+already exist you'll need to setup views by running :
+`require('connect-couchdb').setup('yourdatabase').install()`
+
 ## Example
 
 Take a look at `example.js` file to see an example of use.
