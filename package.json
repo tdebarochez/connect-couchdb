@@ -1,7 +1,7 @@
 {
   "name": "connect-couchdb",
   "description": "CouchDB session store for Connect",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Thomas Debarochez <thomas.barochez+npm@gmail.com>",
   "main": "./index.js",
   "dependencies": { "cradle": ">= 0.1.0" },
