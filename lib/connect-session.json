@@ -1,6 +1,6 @@
 {
     "_id": "_design/connect-sessions",
-    "_rev": "1-04c7a8b4ff32d6adafc646fb67f5c2fa",
+    "language":"javascript",
     "views": {
         "all": {
             "map": "function (doc) {
