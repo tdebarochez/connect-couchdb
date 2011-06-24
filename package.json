@@ -5,6 +5,8 @@
   "version": "0.1.2",
   "author": "Thomas Debarochez <thomas.barochez+npm@gmail.com>",
   "main": "./index.js",
-  "dependencies": {},
+  "dependencies": {
+      "underscore": "1.1.x
+  },
   "engines": { "node": ">= 0.3.0" }
 }
