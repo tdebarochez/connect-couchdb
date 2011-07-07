@@ -4,13 +4,15 @@
     "views": {
         "all": {
             "map": "function (doc) {
-                if (doc.type == 'connect-session') emit(null, doc);
+                if (doc.type == 'connect-session') {
+                    emit(doc._id, doc);
+                }
             }"
         },
         "valid": {
             "map": "function (doc) {
-                if (doc.type == 'connect-session' && doc.ttl < (+new Date - doc.ctime)) {
-                    emit(null, doc);
+                if (doc.type == 'connect-session' && doc.ttl > (+new Date - doc.ctime)) {
+                    emit(doc._id, doc);
                 }
             }"
         }
