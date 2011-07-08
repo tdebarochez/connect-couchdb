@@ -1,5 +1,5 @@
 var connect = require('connect'),
-    connectCouchDB = require('../lib/connect-couchdb')(connect);
+    connectCouchDB = require('./lib/connect-couchdb')(connect);
 
 function helloWorld(req, res) {
   if (!req.session.tick) {
