@@ -6,6 +6,7 @@
 
 - request 1.9.x
 - couchdb 1.0.x or higher
+- expresso (only for tests)
 
 ## Installation
 
@@ -16,7 +17,7 @@ Via npm:
 ## Usage
 
     var connect = require('connect'),
-        ConnectCouchDB = require('./lib/connect-couchdb')(connect);
+        ConnectCouchDB = require('connect-couchdb')(connect);
 
     var store = new connectCouchDB({
       // Name of the database you would like to use for sessions.
@@ -46,12 +47,12 @@ See `example.js` file for an example connect server using `connect-couch`.
 
 ## Author
 
-- tdebarochez
+- Thomas Debarochez ([tdebarochez](https://github.com/tdebarochez))
 
 ## Contributors
 
-- ryankirkman
-- wankdanker
-- ianshward
-- yhahn
-
+- Ian Ward ([ianshward](https://github.com/ianshward))
+- Ryan Kirkman ([ryankirkman](https://github.com/ryankirkman))
+- Young Hahn ([yhahn](https://github.com/yhahn))
+- Dan VerWeire ([wankdanker](https://github.com/wankdanker))
+- Konstantin Käfer ([kkaefer](https://github.com/kkaefer))
