@@ -2,17 +2,10 @@
     "_id": "_design/connect-sessions",
     "language":"javascript",
     "views": {
-        "all": {
+        "expires": {
             "map": "function (doc) {
-                if (doc.type == 'connect-session') {
-                    emit(doc._id, doc);
-                }
-            }"
-        },
-        "valid": {
-            "map": "function (doc) {
-                if (doc.type == 'connect-session' && doc.ttl > (+new Date - doc.ctime)) {
-                    emit(doc._id, doc);
+                if (doc.type == 'connect-session' && doc.expires) {
+                    emit([doc.expires, null], {_id: doc._id});
                 }
             }"
         }

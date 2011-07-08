@@ -23,7 +23,7 @@ module.exports = {
     db.dbPut(function (err, res) {    
       db.putOpt('_revs_limit', '1', function(err, res) {
         assert.strictEqual(err, null);
-        db.dbDel();                    
+        db.dbDel();
       });
     }); 
   },
@@ -80,13 +80,13 @@ module.exports = {
         assert.strictEqual(err, null);
         db.post({doc: {type: 'connect-session'}}, function (err, res) {
           assert.strictEqual(err, null);
-          db.view('_design/connect-sessions/_view/all', {}, function (err, docs) {
+          db.view('_design/connect-sessions/_view/expires', {}, function (err, docs) {
             assert.strictEqual(err, null);
-            assert.strictEqual(docs.total_rows, 1);
+            assert.strictEqual(docs.total_rows, 0);
             db.dbDel();
           });
         });
       });
-    });                            
-  } 
+    });
+  }
 };

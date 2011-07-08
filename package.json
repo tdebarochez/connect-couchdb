@@ -12,7 +12,7 @@
     "connect": "1.5.x"
   },
   "scripts": {
-    "test": "expresso"
+    "test": "NODE_ENV=test expresso"
   },
   "engines": { "node": ">= 0.3.0" }
 }
