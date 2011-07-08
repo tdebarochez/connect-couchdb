@@ -5,14 +5,21 @@
         "all": {
             "map": "function (doc) {
                 if (doc.type == 'connect-session') {
-                    emit(doc._id, doc);
+                    emit(doc._id, {_id: doc._id});
+                }
+            }"
+        },
+        "stale": {
+            "map": "function (doc) {
+                if (doc.type == 'connect-session' && doc.expires <= +new Date()) {
+                    emit(doc._id, {_id: doc._id});
                 }
             }"
         },
         "valid": {
             "map": "function (doc) {
-                if (doc.type == 'connect-session' && doc.ttl > (+new Date - doc.ctime)) {
-                    emit(doc._id, doc);
+                if (doc.type == 'connect-session' && doc.expires > +new Date()) {
+                    emit(doc._id, {_id: doc._id});
                 }
             }"
         }
