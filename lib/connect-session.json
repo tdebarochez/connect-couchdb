@@ -2,24 +2,10 @@
     "_id": "_design/connect-sessions",
     "language":"javascript",
     "views": {
-        "all": {
+        "expires": {
             "map": "function (doc) {
-                if (doc.type == 'connect-session') {
-                    emit(doc._id, {_id: doc._id});
-                }
-            }"
-        },
-        "stale": {
-            "map": "function (doc) {
-                if (doc.type == 'connect-session' && doc.expires <= +new Date()) {
-                    emit(doc._id, {_id: doc._id});
-                }
-            }"
-        },
-        "valid": {
-            "map": "function (doc) {
-                if (doc.type == 'connect-session' && doc.expires > +new Date()) {
-                    emit(doc._id, {_id: doc._id});
+                if (doc.type == 'connect-session' && doc.expires) {
+                    emit([doc.expires, null], {_id: doc._id});
                 }
             }"
         }
