@@ -4,11 +4,11 @@
   "keywords" : [ "connect", "session", "couchdb", "middleware" ],
   "version": "0.2.0",
   "author": "Thomas Debarochez <thomas.barochez+npm@gmail.com>",
-  "contributors": ['Ian Ward (https://github.com/ianshward)',
-                   'Ryan Kirkman (https://github.com/ryankirkman)',
-                   'Young Hahn (https://github.com/yhahn)',
-                   'Dan VerWeire (https://github.com/wankdanker)',
-                   'Konstantin Käfer (https://github.com/kkaefer)'],
+  "contributors": ["Ian Ward (https://github.com/ianshward)",
+                   "Ryan Kirkman (https://github.com/ryankirkman)",
+                   "Young Hahn (https://github.com/yhahn)",
+                   "Dan VerWeire (https://github.com/wankdanker)",
+                   "Konstantin Käfer (https://github.com/kkaefer)"],
   "main": "./index.js",
   "dependencies": {
     "request": "1.9.x",
@@ -21,6 +21,6 @@
     "test": "NODE_ENV=test expresso"
   },
   "engines": { "node": ">= 0.3.0" },
-  "repository" : { "type" : "git"
-                 , "url" : "http://github.com/tdebarochez/connect-couchdb.git"}
+  "repository" : {"type" : "git",
+                  "url" : "http://github.com/tdebarochez/connect-couchdb.git"}
 }
