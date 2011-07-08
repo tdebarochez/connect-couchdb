@@ -1,26 +1,57 @@
 # Connect CouchDB
 
-connect-couchdb is a middleware session storage for connect framework
+`connect-couchdb` is a middleware session store for the connect framework.
 
-## Requirement
+## Requirements
 
- - cradle (v 0.1.0)
+- request 1.9.x
+- couchdb 1.0.x or higher
 
 ## Installation
 
-Via npm :
+Via npm:
 
-	  $ npm install connect-couchdb
+    $ npm install connect-couchdb
 
-If database doesn't exist, it will create it and setting views. If database
-already exist you'll need to setup views by running :
-`require('connect-couchdb').setup('yourdatabase').install()`
+## Usage
 
-## Example
+    var connect = require('connect'),
+        ConnectCouchDB = require('./lib/connect-couchdb')(connect);
 
-Take a look at `example.js` file to see an example of use.
+    var store = new connectCouchDB({
+      // Name of the database you would like to use for sessions.
+      name: 'myapp-sessions',
 
-## Options
+      // Optional. How often expired sessions should be cleaned up.
+      // Defaults to 600000 (10 minutes).
+      reapInterval: 600000,
 
- - `database`: database name
- - ... all every parameters are passed to cradle.Connection()
+      // Optional. How often to run DB compaction against the session
+      // database. Defaults to 600000 (10 minutes).
+      compactInterval: 600000
+    });
+    var server = connect.createServer();
+    server.use(connect.session({secret: 'YourSecretKey', store: store });
+
+If the database specified doesn't already exist `connect-couch` will create it
+and setup its primary design document. It is highly recommended that you use
+a separate database for your sessions for performance of both the session
+views and any other document views you may have.
+
+See `example.js` file for an example connect server using `connect-couch`.
+
+## Tests
+
+    $ npm test
+
+## Author
+
+- tdebarochez
+
+## Contributors
+
+- ryankirkman
+- wankdanker
+- ianshward
+- yhahn
+
