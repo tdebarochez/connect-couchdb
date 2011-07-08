@@ -1,5 +1,5 @@
 var connect = require('connect'),
-    connectCouchDB = require('connect-couchdb');
+    connectCouchDB = require('../lib/connect-couchdb')(connect);
 
 function helloWorld(req, res) {
   if (!req.session.tick) {
@@ -12,9 +12,9 @@ function helloWorld(req, res) {
   }
   res.end('');
 }
-var server = connect.createServer(connect.cookieDecoder(),
+var server = connect.createServer(connect.cookieParser(),
                                   connect.session({secret: 'your secret passphrase',
-                                                   store: new connectCouchDB({database: "test"})}),
+                                                   store: new connectCouchDB({name: "test"})}),
                                   helloWorld);
 
 server.listen(3000);
