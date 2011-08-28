@@ -19,7 +19,7 @@ Via npm:
     var connect = require('connect'),
         ConnectCouchDB = require('connect-couchdb')(connect);
 
-    var store = new connectCouchDB({
+    var store = new ConnectCouchDB({
       // Name of the database you would like to use for sessions.
       name: 'myapp-sessions',
 
