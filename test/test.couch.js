@@ -1,11 +1,19 @@
 var couch = require('../lib/couch')
-  , assert = require('assert');
+  , assert = require('assert')
+  , path = require('path')
+  , global_opts = {"name": 'connect-couchdb-' + +new Date};
 
-var db_name = 'connect-couchdb-' + +new Date;
+if (path.existsSync('./test/credentials.js')) {
+  var credentials = require('./credentials.js');
+  global_opts.username = credentials.username;
+  global_opts.password = credentials.password;
+}
 
 module.exports = {
   'create & delete database': function () {
-    var db = new couch({name: db_name + '1'});
+    var opts = global_opts;
+    opts.name = opts.name + '1';
+    var db = new couch(opts);
     db.dbPut(function (err, res) {
       assert.strictEqual(err, null); 
       db.dbDel(function (err, res) {
@@ -18,17 +26,25 @@ module.exports = {
       new couch(); 
     });   
   },
-  'database _rev_limit option': function () {
-    var db = new couch({name: db_name + '2'});
+  'database _revs_limit option': function () {
+    var opts = global_opts;
+    opts.name = opts.name + '2';
+    var db = new couch(opts); 
     db.dbPut(function (err, res) {    
       db.putOpt('_revs_limit', '1', function(err, res) {
         assert.strictEqual(err, null);
-        db.dbDel();
+        db.getOpt('_revs_limit', function (err, res) {
+          assert.strictEqual(err, null);
+          assert.strictEqual(res, 1);
+          db.dbDel();
+        });
       });
     }); 
   },
   'create & remove document': function () {
-    var db = new couch({name: db_name + '3'});
+    var opts = global_opts;
+    opts.name = opts.name + '3';
+    var db = new couch(opts); 
     db.dbPut(function (err, res) {
       db.put({_id: "qsd", aze: 3}, function (err, res) {
         assert.strictEqual(err, null);
@@ -43,7 +59,9 @@ module.exports = {
     }); 
   },
   'get & update document': function () {
-    var db = new couch({name: db_name + '4'});
+    var opts = global_opts;
+    opts.name = opts.name + '4';
+    var db = new couch(opts); 
     db.dbPut(function (err, res) {
       db.put({_id: "wxc", aze: 4}, function (err, res) {
         db.get("wxc", function (err, res) {
@@ -74,7 +92,9 @@ module.exports = {
     }); 
   },
   'create document with post & views': function () {
-    var db = new couch({name: db_name + '5'});
+    var opts = global_opts;
+    opts.name = opts.name + '5';
+    var db = new couch(opts); 
     db.dbPut(function (err, res) { 
       db.putDesignDocs([__dirname + '/../lib/connect-session.json'], function (err) {
         assert.strictEqual(err, null);

@@ -34,10 +34,18 @@ Via npm:
     var server = connect.createServer();
     server.use(connect.session({secret: 'YourSecretKey', store: store });
 
-If the database specified doesn't already exist `connect-couch` will create it
-and setup its primary design document. It is highly recommended that you use
-a separate database for your sessions for performance of both the session
-views and any other document views you may have.
+If the database specified doesn't already exist you have to create it with 
+`tools/` files. Run following command to create database, populate with the
+design document and setup the CouchDB database specific option `_revs_limit` :
+
+    $ node tools/setup.js <database_name> <revs_limit> [username] [password]
+
+For more informations about the `_revs_limit` option, read
+[this](http://wiki.apache.org/couchdb/HTTP_database_API#Accessing_Database-specific_options).
+
+It is highly recommended that you use a separate database for your 
+sessions for performance of both the session views and any other document 
+views you may have.
 
 See `example.js` file for an example connect server using `connect-couch`.
 

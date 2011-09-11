@@ -18,7 +18,7 @@
     "expresso": "0.8.0"
   },
   "scripts": {
-    "test": "NODE_ENV=test expresso"
+    "test": "NODE_ENV=test expresso test/test.*.js"
   },
   "engines": { "node": ">= 0.3.0" },
   "repository" : {"type" : "git",
