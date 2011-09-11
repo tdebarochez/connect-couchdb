@@ -8,7 +8,9 @@
                    "Ryan Kirkman (https://github.com/ryankirkman)",
                    "Young Hahn (https://github.com/yhahn)",
                    "Dan VerWeire (https://github.com/wankdanker)",
-                   "Konstantin Käfer (https://github.com/kkaefer)"],
+                   "Pau Ramon Revilla (https://github.com/masylum)",
+                   "Konstantin Käfer (https://github.com/kkaefer)",
+                   "Daniel Bell (https://github.com/danbell)"],
   "main": "./index.js",
   "dependencies": {
     "request": "1.9.x",

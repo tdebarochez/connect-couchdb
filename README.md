@@ -59,8 +59,12 @@ See `example.js` file for an example connect server using `connect-couch`.
 
 ## Contributors
 
+    $ git shortlog -s -n
+
 - Ian Ward ([ianshward](https://github.com/ianshward))
 - Ryan Kirkman ([ryankirkman](https://github.com/ryankirkman))
 - Young Hahn ([yhahn](https://github.com/yhahn))
 - Dan VerWeire ([wankdanker](https://github.com/wankdanker))
+- Pau Ramon Revilla ([masylum](https://github.com/masylum))
 - Konstantin Käfer ([kkaefer](https://github.com/kkaefer))
+- Daniel Bell ([danbell](https://github.com/danbell))
