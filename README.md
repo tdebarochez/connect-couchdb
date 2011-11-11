@@ -4,7 +4,7 @@
 
 ## Requirements
 
-- request 1.9.x
+- request 2.x
 - couchdb 1.0.x or higher
 - expresso (only for tests)
 
