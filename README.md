@@ -28,8 +28,8 @@ Via npm:
       reapInterval: 600000,
 
       // Optional. How often to run DB compaction against the session
-      // database. Defaults to 600000 (10 minutes).
-      compactInterval: 600000
+      // database. Defaults to 300000 (5 minutes).
+      compactInterval: 300000
     });
     var server = connect.createServer();
     server.use(connect.session({secret: 'YourSecretKey', store: store });
