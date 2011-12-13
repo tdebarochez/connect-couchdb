@@ -29,6 +29,7 @@ Via npm:
 
       // Optional. How often to run DB compaction against the session
       // database. Defaults to 300000 (5 minutes).
+      // To disable compaction, set compactInterval to -1
       compactInterval: 300000
     });
     var server = connect.createServer();
