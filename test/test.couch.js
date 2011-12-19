@@ -3,8 +3,8 @@ var couch = require('../lib/couch')
   , path = require('path')
   , global_opts = {"name": 'connect-couchdb-' + +new Date};
 
-if (path.existsSync('./test/credentials.js')) {
-  var credentials = require('./credentials.js');
+if (path.existsSync('./test/credentials.json')) {
+  var credentials = require('./credentials.json');
   global_opts.username = credentials.username;
   global_opts.password = credentials.password;
 }
