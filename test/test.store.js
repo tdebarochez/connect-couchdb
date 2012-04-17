@@ -46,6 +46,7 @@ module.exports = {
                       store.length(function(err, len){
                         assert.equal(0, len, '#set() null');
                         store.db.dbDel();
+                        store.clearInterval();
                       });
                     });
                   });
@@ -77,6 +78,7 @@ module.exports = {
             store.length(function(err, len) {
               assert.equal(2, len, '#length() after reap');
               store.db.dbDel();
+              store.clearInterval();
             });
           }, 1000);
         });
