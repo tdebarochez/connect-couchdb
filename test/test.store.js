@@ -84,5 +84,58 @@ module.exports = {
         });
       });
     });
-  }
+  },
+  // Test session put throttling
+  'throttle': function () {
+    var opts = global_opts;
+    opts.name = 'connect-couch-throttle';
+    opts.revs_limit = '4';
+    var store = new ConnectCouchDB(opts);
+    store.setup(opts, function (err, res) {
+      assert.ok(!err);
+        // First #set()
+        store.set('123', { cookie: { maxAge: 20000 }, name: 'tj'
+        //store.set('123', {
+        //  cookie: {
+        //    maxAge: 2000,
+        //    _expires: 13253760002000,
+        //    originalMaxAge: 2000 
+        //  }, 
+        //  name: 'foo',
+        //  lastAccess: 13253760000000
+        }, function(err, ok){
+          var first = new Date().getTime();
+          store.get('123', function(err, data){
+            console.log(data);
+            // Second #set()
+        store.set('123', { cookie: { maxAge: 20000 }, name: 'tj'
+            //store.set('123', {
+            //  cookie: {
+            //    maxAge: 2000,
+            //    _expires: 13253760004000,
+            //    originalMaxAge: 4000,
+            //  },
+            //  name: 'foo',
+            //  lastAccess: 13253760000001
+            }, function(err, ok){
+              store.get('123', function(err, data){
+                var second = new Date().getTime();
+                // session data not changed. If two sets occurred < 1s, objects should be identical
+                if (second - first < 1000) {
+                  console.log('here');
+                  console.log(data);
+                } else {
+                  console.log('there');
+                  console.log(data);
+                }
+        store.set('123', { cookie: { maxAge: 20000 }, name: 'tj'}, function(err, ok) {
+                store.db.dbDel();
+                store.clearInterval();
+              });
+            });
+          });
+          });
+        });
+      }); 
+  },
 };
