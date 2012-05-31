@@ -95,13 +95,13 @@ module.exports = {
       assert.ok(!err);
       // Set new session
       store.set('123', { cookie: {
-          maxAge: 20000, _expires: 13253760000000, originalMaxAge: 20000 },                                                        
+          maxAge: 20000, originalMaxAge: 20000 },                                                        
         name: 'foo',
         lastAccess: 13253760000000
       }, function(err, ok){
           // Set again, now added to locks object in connect-couchdb.js
           store.set('123', { cookie: {
-              maxAge: 20000,  _expires: 13253760000001, originalMaxAge: 19999 },
+              maxAge: 20000,  originalMaxAge: 19999 },
             name: 'foo',
             lastAccess: 13253760000001
           }, function(err, ok){
@@ -110,7 +110,7 @@ module.exports = {
               var orig = data;
               // If we set again now, and less than 1s passes, session should not change              
               store.set('123', { cookie: {
-                  maxAge: 20000, _expires: 13253760000002, originalMaxAge: 19998 },
+                  maxAge: 20000, originalMaxAge: 19998 },
                 name: 'foo',
                 lastAccess: 13253760000002
               }, function(err, ok){
@@ -130,7 +130,7 @@ module.exports = {
                 var start = new Date().getTime();
                 setTimeout(function() { 
                   store.set('123', { cookie: {
-                      maxAge: 20000, _expires: 13253760000003, originalMaxAge: 19997 },
+                      maxAge: 20000, originalMaxAge: 19997 },
                     name: 'foo',
                     lastAccess: 13253760000003
                   }, function(err, ok){
@@ -162,7 +162,7 @@ module.exports = {
                       });
                     });
                   });
-                }, 1100);
+                }, 60000);
               });
             });
           });
