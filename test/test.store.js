@@ -89,6 +89,7 @@ module.exports = {
   'throttle': function () {
     var opts = global_opts;
     opts.name = 'connect-couch-throttle';
+    opts.setThrottle = 1000;
     opts.revs_limit = '4';
     var store = new ConnectCouchDB(opts);
     store.setup(opts, function (err, res) {
@@ -132,7 +133,7 @@ module.exports = {
                   store.set('123', { cookie: {
                       maxAge: 20000, originalMaxAge: 19997 },
                     name: 'foo',
-                    lastAccess: 13253760000003
+                    lastAccess: 13253760001003
                   }, function(err, ok){
                     store.get('123', function(err, data){
                       var stop = new Date().getTime();
@@ -150,7 +151,7 @@ module.exports = {
                       store.set('123', { cookie: {
                           maxAge: 20000, _expires: 13253760000003, originalMaxAge: 19997 },
                         name: 'bar',
-                        lastAccess: 13253760000003
+                        lastAccess: 13253760001003
                       }, function(err, ok){
                         store.get('123', function(err, data){
                           assert.equal(false, JSON.stringify(orig) === JSON.stringify(data),
@@ -162,7 +163,7 @@ module.exports = {
                       });
                     });
                   });
-                }, 60000);
+                }, opts.setThrottle + 100);
               });
             });
           });
