@@ -84,5 +84,91 @@ module.exports = {
         });
       });
     });
-  }
+  },
+  // Test session put throttling
+  'throttle': function () {
+    var opts = global_opts;
+    opts.name = 'connect-couch-throttle';
+    opts.setThrottle = 1000;
+    opts.revs_limit = '4';
+    var store = new ConnectCouchDB(opts);
+    store.setup(opts, function (err, res) {
+      assert.ok(!err);
+      // Set new session
+      store.set('123', { cookie: {
+          maxAge: 20000, originalMaxAge: 20000 },                                                        
+        name: 'foo',
+        lastAccess: 13253760000000
+      }, function(err, ok){
+          // Set again, now added to locks object in connect-couchdb.js
+          store.set('123', { cookie: {
+              maxAge: 20000,  originalMaxAge: 19999 },
+            name: 'foo',
+            lastAccess: 13253760000001
+          }, function(err, ok){
+            var start = new Date().getTime();
+            store.get('123', function(err, data){
+              var orig = data;
+              // If we set again now, and less than 1s passes, session should not change              
+              store.set('123', { cookie: {
+                  maxAge: 20000, originalMaxAge: 19998 },
+                name: 'foo',
+                lastAccess: 13253760000002
+              }, function(err, ok){
+              store.get('123', function(err, data){
+                var stop = new Date().getTime();
+                if (stop - start < 1000) {
+                  assert.equal(JSON.stringify(orig), JSON.stringify(data),
+                    'Sub-microsecond session update without data change should be equal'
+                  );
+                } else {
+                  assert.equal(false, JSON.stringify(orig) === JSON.stringify(data),
+                    '> 1s session update without data change should not be equal'
+                  );
+                }
+                // Now delay a second and the session time-related data should change
+                var orig = data;
+                var start = new Date().getTime();
+                setTimeout(function() { 
+                  store.set('123', { cookie: {
+                      maxAge: 20000, originalMaxAge: 19997 },
+                    name: 'foo',
+                    lastAccess: 13253760001003
+                  }, function(err, ok){
+                    store.get('123', function(err, data){
+                      var stop = new Date().getTime();
+                      // session data not changed. If two sets occurred < 1s, objects should be identical
+                      if (stop - start < 1000) {
+                        assert.equal(JSON.stringify(orig), JSON.stringify(data),
+                          'Sub-microsecond session update without data change should be equal'
+                        );
+                      } else {
+                        assert.equal(false, JSON.stringify(orig) === JSON.stringify(data),
+                          '> 1s session update without data change should not be equal'
+                        );
+                      }
+                      // Now make change to data, session should change no matter what.
+                      store.set('123', { cookie: {
+                          maxAge: 20000, _expires: 13253760000003, originalMaxAge: 19997 },
+                        name: 'bar',
+                        lastAccess: 13253760001003
+                      }, function(err, ok){
+                        store.get('123', function(err, data){
+                          assert.equal(false, JSON.stringify(orig) === JSON.stringify(data),
+                            'Sub-microsecond session update without data change should be equal'
+                          );
+                          store.db.dbDel();
+                          store.clearInterval();
+                        });
+                      });
+                    });
+                  });
+                }, opts.setThrottle + 100);
+              });
+            });
+          });
+        });
+      });
+    });
+  },
 };
