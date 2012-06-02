@@ -1,6 +1,7 @@
 # Connect CouchDB
 
 `connect-couchdb` is a middleware session store for the connect framework.
+[![Build Status](https://secure.travis-ci.org/tdebarochez/connect-couchdb.png)](http://travis-ci.org/tdebarochez/connect-couchdb)
 
 ## Requirements
 
