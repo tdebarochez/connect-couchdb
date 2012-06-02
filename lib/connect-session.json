@@ -3,11 +3,11 @@
     "language":"javascript",
     "views": {
         "expires": {
-            "map": "function (doc) {
+            "map": "(function (doc) {
                 if (doc.type == 'connect-session' && doc.expires) {
                     emit([doc.expires, null], {_id: doc._id});
                 }
-            }"
+            })"
         }
     }
 }
