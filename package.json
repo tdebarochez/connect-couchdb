@@ -14,10 +14,10 @@
   "main": "./index.js",
   "dependencies": {
     "request": "2.x",
-    "connect": "1.x"
+    "connect": "2.x"
   },
   "devDependencies": {
-    "expresso": "0.8.0"
+    "expresso": "0.9.x"
   },
   "scripts": {
     "test": "NODE_ENV=test expresso test/test.*.js"
