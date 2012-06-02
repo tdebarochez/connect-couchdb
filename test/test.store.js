@@ -4,8 +4,8 @@ var assert = require('assert')
   , ConnectCouchDB = require('../')(connect)
   , global_opts = {"name": 'connect-couchdb-' + +new Date};
 
-if (path.existsSync('./test/credentials.js')) {
-  var credentials = require('./credentials.js');
+if (path.existsSync('./test/credentials.json')) {
+  var credentials = require('./credentials.json');
   global_opts.username = credentials.username;
   global_opts.password = credentials.password;
 } 
@@ -100,12 +100,14 @@ module.exports = {
         name: 'foo',
         lastAccess: 13253760000000
       }, function(err, ok){
+        assert.ok(!err);
           // Set again, now added to locks object in connect-couchdb.js
           store.set('123', { cookie: {
               maxAge: 20000,  originalMaxAge: 19999 },
             name: 'foo',
             lastAccess: 13253760000001
           }, function(err, ok){
+            assert.ok(!err);
             var start = new Date().getTime();
             store.get('123', function(err, data){
               var orig = data;
@@ -115,6 +117,7 @@ module.exports = {
                 name: 'foo',
                 lastAccess: 13253760000002
               }, function(err, ok){
+                assert.ok(!err);
               store.get('123', function(err, data){
                 var stop = new Date().getTime();
                 if (stop - start < 1000) {
@@ -135,6 +138,7 @@ module.exports = {
                     name: 'foo',
                     lastAccess: 13253760001003
                   }, function(err, ok){
+                    assert.ok(!err);
                     store.get('123', function(err, data){
                       var stop = new Date().getTime();
                       // session data not changed. If two sets occurred < 1s, objects should be identical
