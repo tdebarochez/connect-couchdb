@@ -11,6 +11,33 @@ if (path.existsSync('./test/credentials.json')) {
 } 
 
 module.exports = {
+  'db.put only if needed': function () {
+    var opts = global_opts;
+    opts.name = 'connect-couch-puttest';
+    var store = new ConnectCouchDB(opts);
+    var cookie = { cookie: { maxAge: 2000 }, name: 'nd' };
+    store.setup(opts, function(err, res) {
+      assert.ok(!err);
+      store.set('987', cookie, function(err, ok) {
+        assert.ok(!err);
+        // Redefine store.db.put to assure that it's not executed any more:
+        store.db._put = store.db.put;
+        store.db.put = function(doc, fn) {
+          throw new Error('This put is not needed!');
+        };
+        store.set('987', cookie, function(err, ok) {
+          assert.ok(!err);
+          store.destroy('987', function() {
+            store.length(function(err, len){
+              assert.equal(0, len, '#set() null');
+              store.db.dbDel();
+              store.clearInterval();
+            });
+          });
+        });
+      });
+    });
+  },
   // Test basic set/get/clear/length functionality.
   'basic': function () {
     var opts = global_opts;
