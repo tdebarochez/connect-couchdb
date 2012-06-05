@@ -1,6 +1,7 @@
 var couch = require('../lib/couch')
   , assert = require('assert')
   , path = require('path')
+  , fs = require('fs')
   , global_opts = {"name": 'connect-couchdb-' + +new Date};
 
 if (path.existsSync('./test/credentials.json')) {
@@ -10,6 +11,17 @@ if (path.existsSync('./test/credentials.json')) {
 }
 
 module.exports = {
+  'connect-session.json is valid json': function() {
+    assert.doesNotThrow(function() {
+      fs.readFile('lib/connect-session.json', function(error, data) {
+        if(error) {
+          throw error;
+        } else {
+          var parsed = JSON.parse(data.toString());
+        }
+      });
+    });
+  },
   'create & delete database': function () {
     var opts = global_opts;
     opts.name = opts.name + '1';
