@@ -70,7 +70,7 @@ See `example.js` file for an example connect server using `connect-couch`.
 - Ian Ward ([ianshward](https://github.com/ianshward))
 - Young Hahn ([yhahn](https://github.com/yhahn))
 - Ryan Kirkman ([ryankirkman](https://github.com/ryankirkman))
-- Andreas Loppe ([alappe](https://github.com/alappe))
+- Andreas Lappe ([alappe](https://github.com/alappe))
 - Cliffano Subagio ([cliffano](https://github.com/cliffano))
 - Dan VerWeire ([wankdanker](https://github.com/wankdanker))
 - Daniel Bell ([danbell](https://github.com/danbell))
