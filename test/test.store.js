@@ -8,9 +8,20 @@ if (path.existsSync('./test/credentials.json')) {
   var credentials = require('./credentials.json');
   global_opts.username = credentials.username;
   global_opts.password = credentials.password;
-} 
+}
 
 module.exports = {
+  'connect-session.json is valid json': function() {
+    assert.doesNotThrow(function() {
+      fs.readFile('lib/connect-session.json', function(error, data) {
+        if(error) {
+          throw error;
+        } else {
+          var parsed = JSON.parse(data.toString());
+        }
+      });
+    });
+  },
   'db.put only if needed': function () {
     var opts = global_opts;
     opts.name = 'connect-couch-puttest';
@@ -48,7 +59,7 @@ module.exports = {
       assert.ok(!err);
       store.db.getOpt('_revs_limit', function (err, res) {
         assert.ok(!err);
-        assert.equal(res, opts.revs_limit); 
+        assert.equal(res, opts.revs_limit);
         // #set()
         store.set('123', { cookie: { maxAge: 2000 }, name: 'tj' }, function(err, ok){
           assert.ok(!err, '#set() got an error');
@@ -82,7 +93,7 @@ module.exports = {
             });
           });
         });
-      }); 
+      });
     });
   },
   // Test expired session reaping.
@@ -123,7 +134,7 @@ module.exports = {
       assert.ok(!err);
       // Set new session
       store.set('123', { cookie: {
-          maxAge: 20000, originalMaxAge: 20000 },                                                        
+          maxAge: 20000, originalMaxAge: 20000 },
         name: 'foo',
         lastAccess: 13253760000000
       }, function(err, ok){
@@ -138,7 +149,7 @@ module.exports = {
             var start = new Date().getTime();
             store.get('123', function(err, data){
               var orig = data;
-              // If we set again now, and less than 1s passes, session should not change              
+              // If we set again now, and less than 1s passes, session should not change
               store.set('123', { cookie: {
                   maxAge: 20000, originalMaxAge: 19998 },
                 name: 'foo',
@@ -159,7 +170,7 @@ module.exports = {
                 // Now delay a second and the session time-related data should change
                 var orig = data;
                 var start = new Date().getTime();
-                setTimeout(function() { 
+                setTimeout(function() {
                   store.set('123', { cookie: {
                       maxAge: 20000, originalMaxAge: 19997 },
                     name: 'foo',
