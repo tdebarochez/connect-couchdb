@@ -2,11 +2,11 @@
   "name": "connect-couchdb",
   "description": "CouchDB session store for Connect",
   "keywords" : [ "connect", "session", "couchdb", "middleware" ],
-  "version": "0.2.5",
+  "version": "0.3.0",
   "author": "Thomas Debarochez <thomas.barochez+npm@gmail.com>",
   "contributors": ["Ian Ward (https://github.com/ianshward)",
-                   "Ryan Kirkman (https://github.com/ryankirkman)",
                    "Young Hahn (https://github.com/yhahn)",
+                   "Ryan Kirkman (https://github.com/ryankirkman)",
                    "Dan VerWeire (https://github.com/wankdanker)",
                    "Pau Ramon Revilla (https://github.com/masylum)",
                    "Konstantin Käfer (https://github.com/kkaefer)",
@@ -14,7 +14,8 @@
   "main": "./index.js",
   "dependencies": {
     "request": "2.x",
-    "connect": "*"
+    "connect": "*",
+    "yacw": "0.1.x"
   },
   "devDependencies": {
     "expresso": "0.9.x"
