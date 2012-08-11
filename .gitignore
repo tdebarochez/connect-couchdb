@@ -1,4 +1,4 @@
 .idea/*
 *.iml
 test/credentials.js
-
+node_modules/
