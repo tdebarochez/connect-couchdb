@@ -1,6 +1,7 @@
 var assert = require('assert')
   , connect = require('connect')
   , path = require('path')
+  , fs = require('fs')
   , ConnectCouchDB = require('../')(connect)
   , global_opts = {"name": 'connect-couchdb-' + +new Date};
 
