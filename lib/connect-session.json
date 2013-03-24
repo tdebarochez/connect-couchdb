@@ -3,7 +3,7 @@
     "language":"javascript",
     "views": {
         "expires": {
-            "map": "(function (doc) {\n if (doc.type == 'connect-session' && doc.expires) {\n emit([doc.expires, null], {_id: doc._id});\n }\n })"
+            "map": "(function (doc) {\n if (doc.type == 'connect-session' && doc.expires) {\n emit(doc.expires);\n }\n })"
         }
     }
 }
