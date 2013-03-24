@@ -10,7 +10,8 @@
                    "Dan VerWeire (https://github.com/wankdanker)",
                    "Pau Ramon Revilla (https://github.com/masylum)",
                    "Konstantin Käfer (https://github.com/kkaefer)",
-                   "Daniel Bell (https://github.com/danbell)"],
+                   "Daniel Bell (https://github.com/danbell)",
+                   "Quentin Raynaud (https://github.com/even)"],
   "main": "./index.js",
   "dependencies": {
     "request": "2.x",

@@ -82,3 +82,4 @@ Please invoke the tool to create the design documents when updating to insure yo
 - Daniel Bell ([danbell](https://github.com/danbell))
 - Konstantin Käfer ([kkaefer](https://github.com/kkaefer))
 - Pau Ramon Revilla ([masylum](https://github.com/masylum))
+- Quentin Raynaud ([even](https://github.com/even))
