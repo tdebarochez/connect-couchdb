@@ -55,6 +55,12 @@ views you may have.
 
 See `example.js` file for an example connect server using `connect-couch`.
 
+## Updating
+
+Please invoke the tool to create the design documents when updating to insure you are using the last version of the view.
+
+    $ node tools/put_design_docs.js <database_name> [username] [password]
+
 ## Tests
 
     $ npm test
