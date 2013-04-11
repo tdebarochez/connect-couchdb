@@ -11,6 +11,10 @@ if (path.existsSync('./test/credentials.json')) {
   global_opts.password = credentials.password;
 }
 
+function reason (err) {
+  return !err ? '' : err.reason;
+}
+
 module.exports = {
   'connect-session.json is valid json': function() {
     assert.doesNotThrow(function() {
@@ -29,20 +33,19 @@ module.exports = {
     var store = new ConnectCouchDB(opts);
     var cookie = { cookie: { maxAge: 2000 }, name: 'nd' };
     store.setup(opts, function(err, res) {
-      assert.ok(!err);
+      assert.ok(!err, reason(err));
       store.set('987', cookie, function(err, ok) {
-        assert.ok(!err);
+        assert.ok(!err, reason(err));
         // Redefine store.db.put to assure that it's not executed any more:
         store.db._put = store.db.put;
         store.db.put = function(doc, fn) {
           throw new Error('This put is not needed!');
         };
         store.set('987', cookie, function(err, ok) {
-          assert.ok(!err);
+          assert.ok(!err, reason(err));
           store.destroy('987', function() {
             store.length(function(err, len){
               assert.equal(0, len, '#set() null');
-              store.db.dbDel();
               store.clearInterval();
             });
           });
@@ -53,38 +56,39 @@ module.exports = {
   // Test basic set/get/clear/length functionality.
   'basic': function () {
     var opts = global_opts;
+    var c = { cookie: { maxAge: 2000 }, name: 'tj' };
     opts.name = 'connect-couch-test';
     opts.revs_limit = '2';
     var store = new ConnectCouchDB(opts);
     store.setup(opts, function (err, res) {
-      assert.ok(!err);
+      assert.ok(!err, reason(err));
       store.db.getOpt('_revs_limit', function (err, res) {
-        assert.ok(!err);
+        assert.ok(!err, reason(err));
         assert.equal(res, opts.revs_limit);
         // #set()
-        store.set('123', { cookie: { maxAge: 2000 }, name: 'tj' }, function(err, ok){
+        store.set('123', c, function(err, ok){
           assert.ok(!err, '#set() got an error');
           // #get()
           store.get('123', function(err, data){
-            assert.ok(!err, '#get() got an error');
-            assert.deepEqual({ cookie: { maxAge: 2000 }, name: 'tj' }, data);
+            assert.ok(!err, '#get() got an error : ' + reason(err));
+            assert.deepEqual(c, data);
             // #length()
             store.length(function(err, len){
-              assert.ok(!err, '#length() got an error');
-              assert.equal(1, len, '#length() with keys');
+              assert.ok(!err, '#length() got an error : ' + reason(err));
+              assert.equal(1, len, '#length() with keys : ' + reason(err));
               // #clear()
               store.clear(function(err, ok){
-                assert.ok(!err, '#clear()');
+                assert.ok(!err, '#clear() : ' + reason(err));
                 // #length()
                 store.length(function(err, len){
-                  assert.ok(!err, '#length()');
-                  assert.equal(0, len, '#length() without keys');
+                  assert.ok(!err, reason(err));
+                  assert.equal(0, len, '#length(' + len + ') without keys');
                   // #set null
-                  store.set('123', { cookie: { maxAge: 2000 }, name: 'tj' }, function(){
+                  store.set('123', c, function(){
                     store.destroy('123', function(){
                       store.length(function(err, len){
+                        assert.ok(!err, reason(err));
                         assert.equal(0, len, '#set() null');
-                        store.db.dbDel();
                         store.clearInterval();
                       });
                     });
@@ -104,19 +108,24 @@ module.exports = {
     opts.reapInterval = 500;
     var store = new ConnectCouchDB(opts);
     store.setupDatabase(function (err, res) {
-      assert.ok(!err);
+      assert.ok(!err, reason(err));
       store.setupDesignDocs(function (err, res) {
-        assert.ok(!err);
+        assert.ok(!err, reason(err));
         store.setupOptions(opts, function(err, res) {
-          assert.ok(!err);
-          store.set('1', { cookie: { maxAge: 250 } });
-          store.set('2', { cookie: { maxAge: 250 } });
-          store.set('3', { cookie: { maxAge: 5000 } });
-          store.set('4', { cookie: { maxAge: 5000 } });
+          assert.ok(!err, reason(err));
+          var cb = function (i) {
+            return function (err) {
+              assert.ok(!err, 'error with #' + i + ' : ' + reason(err));
+            };
+          };
+          store.set('1', { cookie: { maxAge:  250 } }, cb(1));
+          store.set('2', { cookie: { maxAge:  250 } }, cb(2));
+          store.set('3', { cookie: { maxAge: 5000 } }, cb(3));
+          store.set('4', { cookie: { maxAge: 5000 } }, cb(4));
           setTimeout(function() {
             store.length(function(err, len) {
-              assert.equal(2, len, '#length() after reap');
-              store.db.dbDel();
+              assert.ok(!err, reason(err));
+              assert.equal(2, len, '#length(' + len + ') after reap');
               store.clearInterval();
             });
           }, 1000);
@@ -132,21 +141,21 @@ module.exports = {
     opts.revs_limit = '4';
     var store = new ConnectCouchDB(opts);
     store.setup(opts, function (err, res) {
-      assert.ok(!err);
+      assert.ok(!err, reason(err));
       // Set new session
       store.set('123', { cookie: {
           maxAge: 20000, originalMaxAge: 20000 },
         name: 'foo',
         lastAccess: 13253760000000
       }, function(err, ok){
-        assert.ok(!err);
+        assert.ok(!err, reason(err));
           // Set again, now added to locks object in connect-couchdb.js
           store.set('123', { cookie: {
               maxAge: 20000,  originalMaxAge: 19999 },
             name: 'foo',
             lastAccess: 13253760000001
           }, function(err, ok){
-            assert.ok(!err);
+            assert.ok(!err, reason(err));
             var start = new Date().getTime();
             store.get('123', function(err, data){
               var orig = data;
@@ -156,7 +165,7 @@ module.exports = {
                 name: 'foo',
                 lastAccess: 13253760000002
               }, function(err, ok){
-                assert.ok(!err);
+                assert.ok(!err, reason(err));
               store.get('123', function(err, data){
                 var stop = new Date().getTime();
                 if (stop - start < 1000) {
@@ -177,7 +186,7 @@ module.exports = {
                     name: 'foo',
                     lastAccess: 13253760001003
                   }, function(err, ok){
-                    assert.ok(!err);
+                    assert.ok(!err, reason(err));
                     store.get('123', function(err, data){
                       var stop = new Date().getTime();
                       // session data not changed. If two sets occurred < 1s, objects should be identical
@@ -200,7 +209,6 @@ module.exports = {
                           assert.equal(false, JSON.stringify(orig) === JSON.stringify(data),
                             'Sub-microsecond session update without data change should be equal'
                           );
-                          store.db.dbDel();
                           store.clearInterval();
                         });
                       });
@@ -214,4 +222,20 @@ module.exports = {
       });
     });
   },
+  "id leading with underscore": function () {
+    var opts = global_opts;
+    opts.name = 'connect-couch-underscoretest';
+    var store = new ConnectCouchDB(opts);
+    var cookie = { cookie: { maxAge: 2000 }, name: 'nd' };
+    store.setup(opts, function(err, res) {
+      assert.ok(!err, reason(err));
+      store.set('_12345', cookie, function(err, ok) {
+        assert.ok(!err, reason(err));
+        store.get('_12345', function(err, ok) {
+          assert.ok(!err, reason(err));
+          store.clearInterval();
+        });
+      });
+    });
+  }
 };
