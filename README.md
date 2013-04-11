@@ -5,8 +5,8 @@
 
 ## Requirements
 
-- request 2.x
-- couchdb 1.0.x or higher
+- couchdb 1.2.x
+- yacw 0.1.x : the couchdb wrapper. Should be easy to use another one.
 - expresso (only for tests)
 
 ## Installation
@@ -40,7 +40,7 @@ Via npm:
     var server = connect.createServer();
     server.use(connect.session({secret: 'YourSecretKey', store: store });
 
-If the database specified doesn't already exist you have to create it with 
+If the database specified doesn't already exist you have to create it with
 `tools/` files. Run following command to create database, populate with the
 design document and setup the CouchDB database specific option `_revs_limit` :
 
@@ -49,8 +49,8 @@ design document and setup the CouchDB database specific option `_revs_limit` :
 For more informations about the `_revs_limit` option, read
 [this](http://wiki.apache.org/couchdb/HTTP_database_API#Accessing_Database-specific_options).
 
-It is highly recommended that you use a separate database for your 
-sessions for performance of both the session views and any other document 
+It is highly recommended that you use a separate database for your
+sessions for performance of both the session views and any other document
 views you may have.
 
 See `example.js` file for an example connect server using `connect-couch`.

@@ -14,7 +14,6 @@
                    "Quentin Raynaud (https://github.com/even)"],
   "main": "./index.js",
   "dependencies": {
-    "request": "2.x",
     "connect": "*",
     "yacw": "0.1.x"
   },
@@ -22,7 +21,7 @@
     "expresso": "0.9.x"
   },
   "scripts": {
-    "test": "NODE_ENV=test expresso test/test.*.js"
+    "test": "node tools/cleanup.tests.js ; NODE_ENV=test expresso test/test.*.js"
   },
   "engines": { "node": ">= 0.3.0" },
   "repository" : {"type" : "git",
