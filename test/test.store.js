@@ -5,7 +5,7 @@ var assert = require('assert')
   , ConnectCouchDB = require('../')(connect)
   , global_opts = {"name": 'connect-couchdb-' + +new Date};
 
-if (path.existsSync('./test/credentials.json')) {
+if (fs.existsSync('./test/credentials.json')) {
   var credentials = require('./credentials.json');
   global_opts.username = credentials.username;
   global_opts.password = credentials.password;
@@ -15,19 +15,19 @@ function reason (err) {
   return !err ? '' : err.reason;
 }
 
-module.exports = {
-  'connect-session.json is valid json': function() {
+describe('connect-session.json', function () {
+  it('is a valid json', function(done) {
     assert.doesNotThrow(function() {
-      fs.readFile('lib/connect-session.json', function(error, data) {
-        if(error) {
-          throw error;
-        } else {
-          var parsed = JSON.parse(data.toString());
-        }
+      fs.readFile('lib/connect-session.json', function(err, data) {
+        assert.ok(!err, reason(err));
+        JSON.parse(data.toString());
+        done();
       });
     });
-  },
-  'db.put only if needed': function () {
+  });
+});
+describe('db', function () {
+  it('put only if needed', function (done) {
     var opts = global_opts;
     opts.name = 'connect-couch-puttest';
     var store = new ConnectCouchDB(opts);
@@ -47,14 +47,15 @@ module.exports = {
             store.length(function(err, len){
               assert.equal(0, len, '#set() null');
               store.clearInterval();
+              done();
             });
           });
         });
       });
     });
-  },
+  });
   // Test basic set/get/clear/length functionality.
-  'basic': function () {
+  it('set/get/clear/length', function (done) {
     var opts = global_opts;
     var c = { cookie: { maxAge: 2000 }, name: 'tj' };
     opts.name = 'connect-couch-test';
@@ -90,6 +91,7 @@ module.exports = {
                         assert.ok(!err, reason(err));
                         assert.equal(0, len, '#set() null');
                         store.clearInterval();
+                        done();
                       });
                     });
                   });
@@ -100,9 +102,9 @@ module.exports = {
         });
       });
     });
-  },
+  });
   // Test expired session reaping.
-  'reap': function () {
+  it('reaping', function (done) {
     var opts = global_opts;
     opts.name = 'connect-couch-reap';
     opts.reapInterval = 500;
@@ -127,14 +129,15 @@ module.exports = {
               assert.ok(!err, reason(err));
               assert.equal(2, len, '#length(' + len + ') after reap');
               store.clearInterval();
+              done();
             });
           }, 1000);
         });
       });
     });
-  },
+  });
   // Test session put throttling
-  'throttle': function () {
+  it('throttling', function (done) {
     var opts = global_opts;
     opts.name = 'connect-couch-throttle';
     opts.setThrottle = 1000;
@@ -210,6 +213,7 @@ module.exports = {
                             'Sub-microsecond session update without data change should be equal'
                           );
                           store.clearInterval();
+                          done();
                         });
                       });
                     });
@@ -221,8 +225,8 @@ module.exports = {
         });
       });
     });
-  },
-  "id leading with underscore": function () {
+  });
+  it("id leading with underscore", function (done) {
     var opts = global_opts;
     opts.name = 'connect-couch-underscoretest';
     var store = new ConnectCouchDB(opts);
@@ -234,8 +238,9 @@ module.exports = {
         store.get('_12345', function(err, ok) {
           assert.ok(!err, reason(err));
           store.clearInterval();
+          done();
         });
       });
     });
-  }
-};
+  });
+});
