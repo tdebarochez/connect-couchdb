@@ -2,7 +2,8 @@
   "name": "connect-couchdb",
   "description": "CouchDB session store for Connect",
   "keywords" : [ "connect", "session", "couchdb", "middleware" ],
-  "version": "0.4.0",
+  "version": "0.4.1",
+  "node":">=0.8",
   "author": "Thomas Debarochez <thomas.barochez+npm@gmail.com>",
   "contributors": ["Ian Ward (https://github.com/ianshward)",
                    "Young Hahn (https://github.com/yhahn)",
@@ -15,7 +16,7 @@
   "main": "./index.js",
   "dependencies": {
     "connect": "*",
-    "yacw": "0.1.x"
+    "yacw": "0.2.x"
   },
   "devDependencies": {
     "mocha": "*"
@@ -23,7 +24,7 @@
   "scripts": {
     "test": "node tools/cleanup.tests.js ; mocha"
   },
-  "engines": { "node": ">= 0.7.0" },
+  "engines": { "node": ">= 0.8.0" },
   "repository" : {"type" : "git",
                   "url" : "http://github.com/tdebarochez/connect-couchdb.git"}
 }
