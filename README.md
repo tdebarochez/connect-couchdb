@@ -6,7 +6,7 @@
 ## Requirements
 
 - couchdb 1.2.x
-- yacw 0.1.x : the couchdb wrapper. Should be easy to use another one.
+- yacw 0.2.x : the couchdb wrapper. Should be easy to use another one.
 - expresso (only for tests)
 
 ## Installation
@@ -83,3 +83,4 @@ Please invoke the tool to create the design documents when updating to insure yo
 - Konstantin Käfer ([kkaefer](https://github.com/kkaefer))
 - Pau Ramon Revilla ([masylum](https://github.com/masylum))
 - Quentin Raynaud ([even](https://github.com/even))
+- Ivan Erceg ([ierceg](https://github.com/ierceg))

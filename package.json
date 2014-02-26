@@ -12,7 +12,8 @@
                    "Pau Ramon Revilla (https://github.com/masylum)",
                    "Konstantin Käfer (https://github.com/kkaefer)",
                    "Daniel Bell (https://github.com/danbell)",
-                   "Quentin Raynaud (https://github.com/even)"],
+                   "Quentin Raynaud (https://github.com/even)",
+                   "Ivan Erceg (https://github.com/ierceg"],
   "main": "./index.js",
   "dependencies": {
     "connect": "*",
