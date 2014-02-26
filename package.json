@@ -2,7 +2,7 @@
   "name": "connect-couchdb",
   "description": "CouchDB session store for Connect",
   "keywords" : [ "connect", "session", "couchdb", "middleware" ],
-  "version": "0.4.1",
+  "version": "0.4.2",
   "node":">=0.8",
   "author": "Thomas Debarochez <thomas.barochez+npm@gmail.com>",
   "contributors": ["Ian Ward (https://github.com/ianshward)",
