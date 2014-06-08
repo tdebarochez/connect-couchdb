@@ -16,7 +16,7 @@
                    "Ivan Erceg (https://github.com/ierceg"],
   "main": "./index.js",
   "dependencies": {
-    "connect": "*",
+    "connect": "2.17.x",
     "yacw": "0.2.x"
   },
   "devDependencies": {
