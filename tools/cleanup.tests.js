@@ -7,4 +7,4 @@ var databases = ['connect-couch-underscoretest',
                  'connect-couch-puttest'];
 databases.forEach(function (database_name) {
   (new Couch({name: database_name})).dbDel();
-})
+});

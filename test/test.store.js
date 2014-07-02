@@ -1,8 +1,8 @@
 var assert = require('assert')
-  , connect = require('connect')
+  , session = require('express-session')
   , path = require('path')
   , fs = require('fs')
-  , ConnectCouchDB = require('../')(connect)
+  , ConnectCouchDB = require('../')(session)
   , global_opts = {"name": 'connect-couchdb-' + +new Date};
 
 if (fs.existsSync('./test/credentials.json')) {

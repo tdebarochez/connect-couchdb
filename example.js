@@ -1,5 +1,6 @@
-var connect = require('connect'),
-    connectCouchDB = require('./lib/connect-couchdb')(connect);
+var session = require('express-session'),
+    express = require('express'),
+    connectCouchDB = require('./lib/connect-couchdb')(session);
 
 function helloWorld(req, res, next) {
   if (req.url !== '/') return next();
@@ -11,13 +12,12 @@ function helloWorld(req, res, next) {
   res.end('');
 }
 
-var server = connect.createServer(
-  connect.cookieParser(),
-  connect.session({
-    secret: 'your secret passphrase',
-    store: new connectCouchDB({name: "test"})
-  }),
-  helloWorld
-);
-
-server.listen(3000);
+var app = express();
+app.use(session({
+  secret: 'your secret passphrase',
+  store: new connectCouchDB({name: "test"}),
+  saveUninitialized:true,
+  resave:false
+}));
+app.use(helloWorld);
+app.listen(3000);

@@ -1,24 +1,31 @@
 # Connect CouchDB
 
-`connect-couchdb` is a middleware session store for the connect framework.
+`connect-couchdb` is a storage wrapper for the [express-session](https://github.com/expressjs/session) middleware of [connect](https://github.com/senchalabs/connect)/
+[expressjs](https://github.com/visionmedia/express) frameworks.
 [![Build Status](https://secure.travis-ci.org/tdebarochez/connect-couchdb.png)](http://travis-ci.org/tdebarochez/connect-couchdb)
 
 ## Requirements
 
-- couchdb 1.2.x
-- yacw 0.2.x : the couchdb wrapper. Should be easy to use another one.
-- expresso (only for tests)
+- couchdb (tested with v1.5.0)
+- [yacw](https://github.com/tdebarochez/yacw) 0.2.x : the couchdb wrapper. Should be easy to use another one.
+- [mocha](https://github.com/visionmedia/mocha) (only for tests)
+
+## Compatibility
+
+For node v0.10, Connect v3 and Express v4 you must use the master branch. 
+For olders node version, use others branches.  
 
 ## Installation
 
 Via npm:
 
-    $ npm install connect-couchdb
+    $ npm install connect-couchdb --save
 
 ## Usage
 
-    var connect = require('connect'),
-        ConnectCouchDB = require('connect-couchdb')(connect);
+    var session = require('express-session'),
+        connect = require('connect');
+        ConnectCouchDB = require('connect-couchdb')(session);
 
     var store = new ConnectCouchDB({
       // Name of the database you would like to use for sessions.
@@ -37,8 +44,8 @@ Via npm:
       // Defaults to 60000 (1 minute)
       setThrottle: 60000
     });
-    var server = connect.createServer();
-    server.use(connect.session({secret: 'YourSecretKey', store: store });
+    var server = connect();
+    server.use(session({secret: 'YourSecretKey', store: store });
 
 If the database specified doesn't already exist you have to create it with
 `tools/` files. Run following command to create database, populate with the
@@ -67,7 +74,7 @@ Please invoke the tool to create the design documents when updating to insure yo
 
 ## Author
 
-- Thomas Debarochez ([tdebarochez](https://github.com/tdebarochez))
+- Thomas de Barochez ([tdebarochez](https://github.com/tdebarochez))
 
 ## Contributors
 
