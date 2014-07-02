@@ -31,7 +31,8 @@ Via npm:
       // Name of the database you would like to use for sessions.
       name: 'myapp-sessions',
 
-      // Optional. Database connection details.
+      // Optional. Database connection details. See yacw documentation 
+      // for more informations
       username: 'username', 
       password: 'password', 
       host: 'localhost',
