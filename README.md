@@ -31,6 +31,11 @@ Via npm:
       // Name of the database you would like to use for sessions.
       name: 'myapp-sessions',
 
+      // Optional. Database connection details.
+      username: 'username', 
+      password: 'password', 
+      host: 'localhost',
+
       // Optional. How often expired sessions should be cleaned up.
       // Defaults to 600000 (10 minutes).
       reapInterval: 600000,
